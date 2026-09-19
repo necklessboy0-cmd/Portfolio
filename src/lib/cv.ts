@@ -45,7 +45,7 @@ export function buildCvText(): string {
     section(
       "Education",
       education.map((e) => [
-        `${e.degree} — ${e.institution} (${e.years})`,
+        `${e.degree} — ${e.institution}${e.link ? ` (${e.link})` : ""} (${e.years})`,
         e.details ? `  ${e.details}` : "",
       ].filter(Boolean).join("\n")),
     ),
@@ -75,7 +75,10 @@ export function buildCvText(): string {
   lines.push(
     section(
       "Certifications",
-      certificates.map((c) => `- ${c.name} — ${c.issuer} (${c.year})`),
+      certificates.map(
+        (c) =>
+          `- ${c.name} — ${c.issuer}${c.link ? ` (${c.link})` : ""}${c.year ? ` (${c.year})` : ""}`,
+      ),
     ),
   );
 

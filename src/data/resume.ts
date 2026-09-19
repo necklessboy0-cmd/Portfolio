@@ -28,6 +28,7 @@ export type Certificate = {
   issuer: string;
   year: string;
   image?: string; // optional: "/certificates/xxx.png"
+  link?: string; // optional: issuer / credential website (shown as hyperlink on the CV)
 };
 
 export type Education = {
@@ -35,6 +36,7 @@ export type Education = {
   institution: string;
   years: string;
   details?: string;
+  link?: string; // optional: institution website (shown as hyperlink on the CV)
 };
 
 export type Skill = {
@@ -96,24 +98,28 @@ export const education: Education[] = [
     institution: "Institute of Chartered Accountants of Pakistan (ICAP)",
     years: "Ongoing",
     details: "PRC — FTS-44; CAF — 3 results awaited.",
+    link: "https://icap.org.pk/",
   },
   {
     degree: "ADC-II — Accounting & Commerce",
     institution: "University of Karachi",
     years: "2025",
     details: "Result awaited.",
+    link: "https://www.uok.edu.pk/",
   },
   {
     degree: "HSSC — Pre-Engineering",
     institution: "Bahria College Karsaz",
     years: "2021",
     details: "Grade A-1 (94%).",
+    link: "https://www.bckz.edu.pk/",
   },
   {
     degree: "Matriculation (Science)",
     institution: "DHA SKBZ High School",
     years: "",
     details: "Grade A (79.06%).",
+    link: "https://skbzcampus.dhacsskarachi.edu.pk/",
   },
 ];
 
@@ -184,6 +190,7 @@ export const certificates: Certificate[] = [
     issuer: "SACTANX",
     year: "",
     image: "",
+    link: "https://sactanx.com/",
   },
   {
     name: "Personal Presentation and Effectiveness",

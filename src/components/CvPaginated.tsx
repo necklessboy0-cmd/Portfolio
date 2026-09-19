@@ -30,6 +30,20 @@ const whatsappLink = p.whatsappNumber
   ? `https://wa.me/${p.whatsappNumber}`
   : "";
 
+function ExtLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <a href={href} target="_blank" rel="noreferrer noopener">
+      {children}
+    </a>
+  );
+}
+
 const blockDefs: { key: string; render: () => React.ReactNode }[] = [
   {
     key: "header",
@@ -87,7 +101,12 @@ const blockDefs: { key: string; render: () => React.ReactNode }[] = [
         <ul>
           {education.map((e) => (
             <li key={e.degree} style={{ fontSize: 13 }}>
-              <strong>{e.degree}</strong> — {e.institution}
+              <strong>{e.degree}</strong> —{" "}
+              {e.link ? (
+                <ExtLink href={e.link}>{e.institution}</ExtLink>
+              ) : (
+                e.institution
+              )}
               {e.years ? ` (${e.years})` : ""}
               {e.details && (
                 <p style={{ fontSize: 12, color: "#4b5563", marginTop: 2 }}>
@@ -123,7 +142,10 @@ const blockDefs: { key: string; render: () => React.ReactNode }[] = [
         <ul>
           {projects.map((pr) => (
             <li key={pr.name} style={{ fontSize: 13 }}>
-              <strong>{pr.name.toUpperCase()}</strong> — {pr.description}
+              <strong>
+                <ExtLink href={pr.link}>{pr.name.toUpperCase()}</ExtLink>
+              </strong>
+              {" "}— {pr.description}
               {pr.tags.length > 0 && (
                 <p style={{ fontSize: 12, color: "#4b5563", marginTop: 2 }}>
                   Tech: {pr.tags.join(", ")}
@@ -154,7 +176,15 @@ const blockDefs: { key: string; render: () => React.ReactNode }[] = [
           {certificates.map((c) => (
             <li key={c.name} style={{ fontSize: 13 }}>
               <strong>{c.name}</strong>
-              {c.issuer ? ` — ${c.issuer}` : ""}
+              {c.issuer ? (
+                c.link ? (
+                  <>
+                    {" "}— <ExtLink href={c.link}>{c.issuer}</ExtLink>
+                  </>
+                ) : (
+                  ` — ${c.issuer}`
+                )
+              ) : null}
               {c.year ? ` (${c.year})` : ""}
             </li>
           ))}
@@ -251,7 +281,8 @@ export default function CvPaginated() {
           </div>
           <div className="cv-page-footer">
             <span>
-              {p.fullName} — Curriculum Vitae
+              <ExtLink href={p.website}>{p.fullName}</ExtLink> — Curriculum
+              Vitae
             </span>
             <span>
               Page {idx + 1} of {currentPages.length}

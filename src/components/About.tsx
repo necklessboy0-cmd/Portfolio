@@ -5,10 +5,10 @@ import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 
 export default function About() {
-  const facts = [
+  const facts: { label: string; value: string; href?: string }[] = [
     { label: "Name", value: personal.shortName },
     { label: "Location", value: personal.location },
-    { label: "Email", value: personal.email },
+    { label: "Email", value: personal.email, href: `mailto:${personal.email}` },
     { label: "Status", value: personal.availability },
   ];
 
@@ -54,7 +54,18 @@ export default function About() {
                     {f.label}
                   </p>
                   <p className="mt-1.5 break-all text-sm text-nebula-300">
-                    {f.value}
+                    {f.href ? (
+                      <a
+                        href={f.href}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="transition-colors hover:text-fuchsia-300"
+                      >
+                        {f.value}
+                      </a>
+                    ) : (
+                      f.value
+                    )}
                   </p>
                 </div>
               </Reveal>
