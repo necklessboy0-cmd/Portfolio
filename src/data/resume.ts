@@ -79,10 +79,10 @@ export const personal: Personal = {
   phone: "+92 341 9429291",
   whatsappNumber: "923419429291", // digits only, with country code
   location: "Karachi, Pakistan",
-  website: "https://your-site.vercel.app", // ← replace with your live portfolio link
+  website: "https://muhammad-taswaib-portfolio-7exa877ew-necklessboy0-4972.vercel.app", // live portfolio
   availability: "Open to AI, data & finance collaborations",
 
-  github: "https://github.com/yourusername", // ← replace
+  github: "https://github.com/necklessboy0-cmd",
   linkedin: "https://www.linkedin.com/in/muhammad-taswaib-8757b52b9",
   instagram: "https://www.instagram.com/muhammadtaswaib",
 };

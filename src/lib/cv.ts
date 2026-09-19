@@ -27,12 +27,12 @@ export function buildCvText(): string {
   lines.push(
     [
       p.phone,
-      p.email,
-      `${p.location}`,
-      `Portfolio: ${p.website}`,
+      `Email: ${p.email}`,
+      `Website: ${p.website}`,
       `GitHub: ${p.github}`,
       `LinkedIn: ${p.linkedin}`,
-      `WhatsApp: wa.me/${p.whatsappNumber}`,
+      `WhatsApp: ${p.phone}`, // readable number; wa.me link lives in the PDF & site
+      `${p.location}`,
     ].join(" | "),
   );
 

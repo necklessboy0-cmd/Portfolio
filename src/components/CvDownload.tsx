@@ -48,6 +48,24 @@ export default function CvDownload({ sheetId }: { sheetId: string }) {
         const img = canvas.toDataURL("image/jpeg", 0.95);
         if (i > 0) pdf.addPage();
         pdf.addImage(img, "JPEG", 0, 0, 210, 297);
+
+        // Re-add clickable hyperlinks on top of the flattened image:
+        // html2canvas renders <a> as pixels, so we map each link's position
+        // onto the PDF page (210x297mm) and add a real link annotation.
+        const pageRect = pageEls[i].getBoundingClientRect();
+        const mmPerPx = 210 / canvas.width;
+        const links = Array.from(
+          pageEls[i].querySelectorAll("a[href]"),
+        ) as HTMLAnchorElement[];
+        for (const a of links) {
+          const r = a.getBoundingClientRect();
+          const x = (r.left - pageRect.left) * mmPerPx;
+          const y = (r.top - pageRect.top) * mmPerPx;
+          const w = r.width * mmPerPx;
+          const h = r.height * mmPerPx;
+          if (w <= 0 || h <= 0) continue;
+          pdf.link(x, y, w, h, { url: a.href });
+        }
       }
       pdf.save("Muhammad-Taswaib-CV.pdf");
     } catch (err) {

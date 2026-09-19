@@ -44,3 +44,6 @@ next-env.d.ts
 # dev artifacts
 dev-server.log
 .freebuff/
+
+.vercel
+vercel-login.log

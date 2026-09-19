@@ -18,13 +18,17 @@ const AVAILABLE = PAGE_H - PAD_TOP - PAD_BOTTOM - FOOTER_H - 8;
 
 const p = personal;
 
-function facts() {
-  const social = [];
-  if (p.github) social.push(p.github.replace(/^https?:\/\/(www\.)?/, ""));
-  if (p.linkedin) social.push(p.linkedin.replace(/^https?:\/\/(www\.)?/, ""));
-  if (p.instagram) social.push(p.instagram.replace(/^https?:\/\/(www\.)?/, ""));
-  return social;
+function socialLinks() {
+  const links: { label: string; href: string }[] = [];
+  if (p.github) links.push({ label: "GitHub", href: p.github });
+  if (p.linkedin) links.push({ label: "LinkedIn", href: p.linkedin });
+  if (p.instagram) links.push({ label: "Instagram", href: p.instagram });
+  return links;
 }
+
+const whatsappLink = p.whatsappNumber
+  ? `https://wa.me/${p.whatsappNumber}`
+  : "";
 
 const blockDefs: { key: string; render: () => React.ReactNode }[] = [
   {
@@ -34,12 +38,34 @@ const blockDefs: { key: string; render: () => React.ReactNode }[] = [
         <h1>{p.fullName.toUpperCase()}</h1>
         <p style={{ fontSize: 14 }}>{p.role}</p>
         <p style={{ fontSize: 12, marginTop: 6, color: "#4b5563" }}>
-          {p.phone} | {p.email} | {p.location}
+          {p.phone} |{" "}
+          <a href={`mailto:${p.email}`}>{p.email}</a> |{" "}
+          <a href={p.website} target="_blank" rel="noreferrer noopener">
+            Website
+          </a>{" "}
+          | {p.location}
         </p>
         <p style={{ fontSize: 12, color: "#4b5563" }}>
-          Portfolio: {p.website}
-          {p.whatsappNumber ? ` | WhatsApp: wa.me/${p.whatsappNumber}` : ""}
-          {facts().length > 0 ? ` | ${facts().join(" | ")}` : ""}
+          {socialLinks().map((s, i) => (
+            <span key={s.label}>
+              {i > 0 && " | "}
+              <a href={s.href} target="_blank" rel="noreferrer noopener">
+                {s.label}
+              </a>
+            </span>
+          ))}
+          {whatsappLink && (
+            <span>
+              {socialLinks().length > 0 ? " | " : ""}
+              <a
+                href={whatsappLink}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                WhatsApp: {p.phone}
+              </a>
+            </span>
+          )}
         </p>
       </header>
     ),
@@ -104,9 +130,13 @@ const blockDefs: { key: string; render: () => React.ReactNode }[] = [
                 </p>
               )}
               <p style={{ fontSize: 12, marginTop: 2 }}>
-                Link:{" "}
-                <a href={pr.link} target="_blank" rel="noreferrer noopener">
-                  {pr.link}
+                Live Link:{" "}
+                <a
+                  href={pr.link}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  Open Project ↗
                 </a>
               </p>
             </li>
