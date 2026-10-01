@@ -1,7 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: var(--font-orbitron), ui-sans-serif, system-ui, sans-serif;
+  /* Two-font hierarchy:
+     display/name → Chakra Petch (futuristic, for headings/UI)
+     body         → Space Grotesk (clean, for reading) */
+  --font-display: var(--font-chakra), ui-sans-serif, system-ui, sans-serif;
   --font-name: var(--font-chakra), ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-space), ui-sans-serif, system-ui, sans-serif;
 
