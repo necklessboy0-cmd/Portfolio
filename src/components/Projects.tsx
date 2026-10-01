@@ -1,12 +1,13 @@
 "use client";
 
-import { projects } from "@/data/resume";
+import { useResume } from "./ResumeProvider";
+import type { Project } from "@/data/resume";
 import { motion } from "motion/react";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 import { ExternalLinkIcon, RocketIcon } from "./icons";
 
-function ProjectCard({ project }: { project: (typeof projects)[number] }) {
+function ProjectCard({ project }: { project: Project }) {
   const hasImage = Boolean(project.image);
   const tagLine = (array: string[]) => array.map((t) => t.trim()).join(" · ");
 
@@ -73,6 +74,7 @@ function ProjectCard({ project }: { project: (typeof projects)[number] }) {
 }
 
 export default function Projects() {
+  const { projects } = useResume();
   return (
     <section
       id="projects"

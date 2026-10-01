@@ -43,9 +43,9 @@ export default function CvPage() {
       <CvPaginated />
 
       <p className="no-print mt-6 text-center text-xs text-nebula-300/50">
-        Tip: for maximum ATS compatibility use the .TXT download (clean text).
-        PDF is a styled print-out of the same pages; Print preserves page
-        breaks.
+        The PDF is real, selectable text (ATS-parseable) with clickable
+        hyperlinks. The .TXT download is a plain-text version for strict ATS
+        parsers. Print / Save as PDF reproduces the on-screen sheet.
       </p>
     </section>
   );

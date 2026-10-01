@@ -2,9 +2,10 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
-import { personal } from "@/data/resume";
+import { useResume } from "./ResumeProvider";
 
 export default function Footer() {
+  const { personal } = useResume();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,

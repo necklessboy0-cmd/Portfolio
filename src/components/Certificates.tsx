@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { certificates, type Certificate } from "@/data/resume";
+import { useResume } from "./ResumeProvider";
+import type { Certificate } from "@/data/resume";
 import CountUp from "./CountUp";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
@@ -43,6 +44,7 @@ function CertificateCard({
 }
 
 export default function Certificates() {
+  const { certificates } = useResume();
   const [selected, setSelected] = useState<Certificate | null>(null);
   const total = certificates.length;
 
@@ -118,6 +120,16 @@ export default function Certificates() {
                 <h3 className="mt-2 font-name text-2xl font-bold italic text-white">
                   {selected.name}
                 </h3>
+                {selected.link && (
+                  <a
+                    href={selected.link}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="btn-primary mt-5 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-[0.2em] text-white"
+                  >
+                    Open certificate ↗
+                  </a>
+                )}
               </div>
             </motion.div>
           </motion.div>

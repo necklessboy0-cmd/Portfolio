@@ -1,6 +1,6 @@
 "use client";
 
-import { personal } from "@/data/resume";
+import { useResume } from "./ResumeProvider";
 import { GitHubIcon, InstagramIcon, LinkedInIcon, WhatsAppIcon } from "./icons";
 
 function SocialLinks({
@@ -10,6 +10,7 @@ function SocialLinks({
   size?: number;
   className?: string;
 }) {
+  const { personal } = useResume();
   const items = [
     {
       label: "GitHub",

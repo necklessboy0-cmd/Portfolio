@@ -1,24 +1,15 @@
-import {
-  certificates,
-  education,
-  personal,
-  projects,
-  skills,
-} from "@/data/resume";
+import type { ResumeData } from "@/data/resume";
 
-export type CvData = {
-  personal: typeof personal;
-  education: typeof education;
-  skills: typeof skills;
-  projects: typeof projects;
-  certificates: typeof certificates;
-};
+// ----------------------------------------------------------------------------
+// ATS-friendly plain-text CV. Plain text keeps full URLs on purpose —
+// recruiters' parsers and copy-paste both need the raw link.
+// ----------------------------------------------------------------------------
 
 const section = (title: string, body: string[]) =>
   [title.toUpperCase(), "=".repeat(title.length), ...body, ""].join("\n");
 
-export function buildCvText(): string {
-  const p = personal;
+export function buildCvText(data: ResumeData): string {
+  const p = data.personal;
   const lines: string[] = [];
 
   lines.push(p.fullName.toUpperCase());
@@ -31,43 +22,65 @@ export function buildCvText(): string {
       `Website: ${p.website}`,
       `GitHub: ${p.github}`,
       `LinkedIn: ${p.linkedin}`,
-      `WhatsApp: ${p.phone}`, // readable number; wa.me link lives in the PDF & site
-      `${p.location}`,
+      `WhatsApp: ${p.phone}`,
+      p.location,
     ].join(" | "),
   );
 
   lines.push("");
-  lines.push(
-    section("Summary", [p.summary]),
-  );
+  lines.push(section("Professional Summary", [p.summary]));
 
   lines.push(
     section(
       "Education",
-      education.map((e) => [
-        `${e.degree} — ${e.institution}${e.link ? ` (${e.link})` : ""} (${e.years})`,
-        e.details ? `  ${e.details}` : "",
-      ].filter(Boolean).join("\n")),
+      data.education
+        .map((e) =>
+          [
+            `${e.degree} — ${e.institution}${e.link ? ` (${e.link})` : ""}${e.years ? ` (${e.years})` : ""}`,
+            e.details ? `  ${e.details}` : "",
+          ]
+            .filter(Boolean)
+            .join("\n"),
+        ),
     ),
   );
 
   lines.push(
     section(
       "Skills",
-      skills.map((s) => `${s.name} — ${s.level}%`),
+      data.skills.map((s) => `${s.name}${s.level ? ` — ${s.level}%` : ""}`),
     ),
   );
 
+  if ((data.experience?.length ?? 0) > 0) {
+    lines.push(
+      section(
+        "Experience",
+        data.experience.map((x) =>
+          [
+            `- ${x.title}${x.subtitle ? ` — ${x.subtitle}` : ""}${x.year ? ` (${x.year})` : ""}`,
+            x.description ? `  ${x.description}` : "",
+            x.link ? `  Link: ${x.link}` : "",
+          ]
+            .filter(Boolean)
+            .join("\n"),
+        ),
+      ),
+    );
+  }
+
   lines.push(
     section(
-      "Projects (Live Links)",
-      projects.map((pr) =>
+      "Projects",
+      data.projects.map((pr) =>
         [
-          `- ${pr.name.toUpperCase()}`,
+          `- ${pr.name}`,
           `  ${pr.description}`,
-          `  Tech: ${pr.tags.join(", ")}`,
+          pr.tags.length > 0 ? `  Technologies: ${pr.tags.join(", ")}` : "",
           `  Link: ${pr.link}`,
-        ].join("\n"),
+        ]
+          .filter(Boolean)
+          .join("\n"),
       ),
     ),
   );
@@ -75,25 +88,55 @@ export function buildCvText(): string {
   lines.push(
     section(
       "Certifications",
-      certificates.map(
+      data.certificates.map(
         (c) =>
           `- ${c.name} — ${c.issuer}${c.link ? ` (${c.link})` : ""}${c.year ? ` (${c.year})` : ""}`,
       ),
     ),
   );
 
-  lines.push(
-    section(
-      "Interests",
-      ["Generative AI & Prompt Engineering", "Data Analytics", "Finance & Accounting", "AI Application Development"],
-    ),
-  );
+  if ((data.courses?.length ?? 0) > 0) {
+    lines.push(
+      section(
+        "Courses & Training",
+        data.courses.map((c) =>
+          [
+            `- ${c.title}${c.subtitle ? ` — ${c.subtitle}` : ""}${c.year ? ` (${c.year})` : ""}`,
+            c.description ? `  ${c.description}` : "",
+            c.link ? `  Link: ${c.link}` : "",
+          ]
+            .filter(Boolean)
+            .join("\n"),
+        ),
+      ),
+    );
+  }
 
-  lines.push(
-    section("Languages", ["Urdu — Native/Fluent", "English — Moderate"]),
-  );
+  for (const sec of data.sections ?? []) {
+    if (sec.items.length === 0) continue;
+    lines.push(
+      section(
+        sec.title,
+        sec.items.map((item) =>
+          [
+            `- ${item.title}${item.subtitle ? ` — ${item.subtitle}` : ""}${item.year ? ` (${item.year})` : ""}`,
+            item.description ? `  ${item.description}` : "",
+            item.link ? `  Link: ${item.link}` : "",
+          ]
+            .filter(Boolean)
+            .join("\n"),
+        ),
+      ),
+    );
+  }
 
-  // This CV is auto-generated from the site's data file
-  // (src/data/resume.ts). Any project you add is listed here automatically.
+  if ((data.interests?.length ?? 0) > 0) {
+    lines.push(section("Interests", data.interests));
+  }
+
+  if ((data.languages?.length ?? 0) > 0) {
+    lines.push(section("Languages", data.languages));
+  }
+
   return lines.join("\n");
 }

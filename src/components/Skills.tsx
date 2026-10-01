@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "motion/react";
-import { skills } from "@/data/resume";
+import { useResume } from "./ResumeProvider";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 
@@ -37,6 +37,7 @@ function SkillBar({ name, level, index }: { name: string; level: number; index: 
 }
 
 export default function Skills() {
+  const { skills } = useResume();
   return (
     <section id="skills" className="relative mx-auto max-w-6xl scroll-mt-20 px-6 py-24">
       <SectionHeading

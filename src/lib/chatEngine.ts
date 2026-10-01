@@ -1,18 +1,10 @@
-import {
-  certificates,
-  education,
-  personal,
-  projects,
-  skills,
-} from "@/data/resume";
-
-const p = personal;
+import type { ResumeData } from "@/data/resume";
 
 function hasAny(text: string, words: string[]): boolean {
   return words.some((w) => text.includes(w));
 }
 
-function greeting(text: string): string | null {
+function greeting(text: string, p: ResumeData["personal"]): string | null {
   const words = ["hi", "hello", "hey", "salam", "assalam", "peace", "yo ", "good morning", "good evening", "good afternoon", "sup"];
   if (hasAny(text, words)) {
     const variations = [
@@ -25,7 +17,9 @@ function greeting(text: string): string | null {
   return null;
 }
 
-function projectAnswer(text: string): string | null {
+function projectAnswer(text: string, data: ResumeData): string | null {
+  const projects = data.projects;
+  const p = data.personal;
   const mentioned = projects.filter((pr) => {
     const name = pr.name.toLowerCase();
     return text.includes(name) || text.includes(name.replace(/\s+/g, ""));
@@ -49,8 +43,8 @@ function projectAnswer(text: string): string | null {
   return null;
 }
 
-function educationAnswer(): string {
-  return education
+function educationAnswer(data: ResumeData): string {
+  return data.education
     .map(
       (e) =>
         `🎓 ${e.degree}\n${e.institution} (${e.years})${e.details ? `\n${e.details}` : ""}`,
@@ -58,16 +52,16 @@ function educationAnswer(): string {
     .join("\n\n");
 }
 
-function certificateAnswer(text: string): string | null {
+function certificateAnswer(text: string, data: ResumeData): string | null {
   if (!hasAny(text, ["certificate", "certificates", "certification", "award", "achievement", "courses", "training"])) {
     return null;
   }
-  return certificates
+  return data.certificates
     .map((c) => `🏅 ${c.name}\n${c.issuer} (${c.year})`)
     .join("\n\n");
 }
 
-function contactAnswer(): string {
+function contactAnswer(p: ResumeData["personal"]): string {
   const parts = [
     `Email: ${p.email}`,
     `Phone / WhatsApp: ${p.phone} (wa.me/${p.whatsappNumber})`,
@@ -79,26 +73,28 @@ function contactAnswer(): string {
   return `You can reach ${p.shortName} at:\n\n${parts.join("\n")}`;
 }
 
-function skillsAnswer(): string {
-  const list = skills.map((s) => `${s.name} (${s.level}%)`).join(", ");
+function skillsAnswer(data: ResumeData): string {
+  const p = data.personal;
+  const list = data.skills.map((s) => `${s.name} (${s.level}%)`).join(", ");
   return `💻 ${p.shortName}'s skills:\n${list}`;
 }
 
 const FALLBACK =
-  `I can help with questions about ${p.shortName}'s CV and projects. Try asking about:\n\n` +
-  `• Who is ${p.shortName}?\n` +
-  `• Education / study / college\n` +
-  `• Skills\n` +
-  `• Projects / apps\n` +
-  `• Certificates\n` +
-  `• Contact / email / phone / socials\n` +
-  `• Download CV`;
+  "I can help with questions about the CV and projects. Try asking about:\n\n" +
+  "• Who is this?\n" +
+  "• Education / study / college\n" +
+  "• Skills\n" +
+  "• Projects / apps\n" +
+  "• Certificates\n" +
+  "• Contact / email / phone / socials\n" +
+  "• Download CV";
 
-export function answerAssistant(question: string): string {
+export function answerAssistant(question: string, data: ResumeData): string {
+  const p = data.personal;
   const t = question.toLowerCase().trim();
   if (!t) return "Please type a question 👇";
 
-  const greetingAnswer = greeting(t);
+  const greetingAnswer = greeting(t, p);
   if (greetingAnswer) return greetingAnswer;
 
   if (hasAny(t, ["thank", "thanks", "shukria", "welcome"])) {
@@ -120,21 +116,21 @@ export function answerAssistant(question: string): string {
   }
 
   if (hasAny(t, ["education", "study", "studies", "studied", "college", "collage", "university", "degree", "school", "academic"])) {
-    return `🎓 Education:\n\n${educationAnswer()}`;
+    return `🎓 Education:\n\n${educationAnswer(data)}`;
   }
 
   if (hasAny(t, ["skill", "skills", "technology", "technologies", "stack", "languages", "tools"])) {
-    return skillsAnswer();
+    return skillsAnswer(data);
   }
 
-  const projectResult = projectAnswer(t);
+  const projectResult = projectAnswer(t, data);
   if (projectResult) return projectResult;
 
-  const certResult = certificateAnswer(t);
+  const certResult = certificateAnswer(t, data);
   if (certResult) return certResult;
 
   if (hasAny(t, ["contact", "reach", "email", "mail", "phone", "number", "whatsapp", "social", "instagram", "github", "linkedin", "location", "address"])) {
-    return contactAnswer();
+    return contactAnswer(p);
   }
 
   if (hasAny(t, ["cv", "resume", "download cv", "download resume"])) {

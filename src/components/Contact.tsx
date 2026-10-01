@@ -1,12 +1,13 @@
 "use client";
 
-import { personal } from "@/data/resume";
+import { useResume } from "./ResumeProvider";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 import SocialLinks from "./SocialLinks";
 import { MailIcon, RocketIcon, WhatsAppIcon } from "./icons";
 
 export default function Contact() {
+  const { personal } = useResume();
   return (
     <section
       id="contact"

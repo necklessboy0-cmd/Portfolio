@@ -1,0 +1,142 @@
+{
+  "personal": {
+    "photo": "/profile.jpg",
+    "name": "MUHAMMAD TASWAIB",
+    "shortName": "Muhammad Taswaib",
+    "fullName": "Muhammad Taswaib",
+    "role": "Generative AI Developer · CA Student",
+    "tagline": "Building AI-powered applications that turn smart ideas into practical, real-world solutions.",
+    "summary": "Aspiring finance professional and CA student at the Institute of Chartered Accountants of Pakistan (ICAP), with a growing interest in Generative AI and AI application development. Built and deployed AI powered applications using Streamlit, APIs, and prompt engineering. Developing practical skills in AI, data analytics, application development, and debugging — with an interest in applying technology to real business and finance-related processes.",
+    "email": "muhammadtaswaib0159@gmail.com",
+    "phone": "+92 341 9429291",
+    "whatsappNumber": "923419429291",
+    "location": "Karachi, Pakistan",
+    "website": "https://muhammad-taswaib-portfolio-7exa877ew-necklessboy0-4972.vercel.app",
+    "availability": "Open to AI, data & finance collaborations",
+    "github": "https://github.com/necklessboy0-cmd",
+    "linkedin": "https://www.linkedin.com/in/muhammad-taswaib-8757b52b9",
+    "instagram": "https://www.instagram.com/muhammadtaswaib"
+  },
+  "education": [
+    {
+      "degree": "CA — Chartered Accountancy (PRC · FTS-44 · CAF)",
+      "institution": "Institute of Chartered Accountants of Pakistan (ICAP)",
+      "years": "Ongoing",
+      "details": "PRC — FTS-44; CAF — 3 results awaited.",
+      "link": "https://icap.org.pk/"
+    },
+    {
+      "degree": "ADC-II — Accounting & Commerce",
+      "institution": "University of Karachi",
+      "years": "2025",
+      "details": "Result awaited.",
+      "link": "https://www.uok.edu.pk/"
+    },
+    {
+      "degree": "HSSC — Pre-Engineering",
+      "institution": "Bahria College Karsaz",
+      "years": "2021",
+      "details": "Grade A-1 (94%).",
+      "link": "https://www.bckz.edu.pk/"
+    },
+    {
+      "degree": "Matriculation (Science)",
+      "institution": "DHA SKBZ High School",
+      "years": "",
+      "details": "Grade A (79.06%).",
+      "link": "https://skbzcampus.dhacsskarachi.edu.pk/"
+    }
+  ],
+  "skills": [
+    { "name": "Generative AI", "level": 88 },
+    { "name": "Prompt Engineering", "level": 86 },
+    { "name": "AI Application Development", "level": 82 },
+    { "name": "Streamlit", "level": 88 },
+    { "name": "APIs", "level": 82 },
+    { "name": "Data Analytics", "level": 76 },
+    { "name": "Team Management", "level": 78 },
+    { "name": "Communication", "level": 86 },
+    { "name": "Problem Solving", "level": 90 },
+    { "name": "Creativity", "level": 88 },
+    { "name": "Leadership", "level": 78 },
+    { "name": "Adaptability", "level": 90 }
+  ],
+  "projects": [
+    {
+      "name": "THUNDER",
+      "description": "AI-powered application built with Streamlit and Generative AI — deployed and available live.",
+      "tags": ["Streamlit", "Generative AI", "Python", "API"],
+      "link": "https://thunder-yoo9ildpztibs8t8u4fggd.streamlit.app/",
+      "image": "",
+      "icon": "⚡"
+    },
+    {
+      "name": "CV Analyzer",
+      "description": "AI-powered CV analysis application built with Streamlit that reviews and improves resumes.",
+      "tags": ["Streamlit", "Generative AI", "Python"],
+      "link": "https://cv-analyzer-lwhzhfnhzdsfdwdg6kpwpc.streamlit.app/",
+      "image": "",
+      "icon": "📄"
+    },
+    {
+      "name": "ResearchAssist",
+      "description": "An AI-powered research assistant web app that helps you gather and organize information quickly.",
+      "tags": ["Next.js", "React", "AI", "Tailwind"],
+      "link": "https://vercel-researchassist.vercel.app/",
+      "image": "",
+      "icon": "🤖"
+    }
+  ],
+  "certificates": [
+    {
+      "name": "Generative and Agentic AI",
+      "issuer": "ASPIRE Pakistan · Pak-Angels · HEC",
+      "year": "",
+      "image": ""
+    },
+    {
+      "name": "Web Development · Graphic Designing · Prompt Engineering",
+      "issuer": "SACTANX",
+      "year": "",
+      "image": "",
+      "link": "https://sactanx.com/"
+    },
+    {
+      "name": "Personal Presentation and Effectiveness",
+      "issuer": "Al-Hamd Institute",
+      "year": "",
+      "image": ""
+    },
+    {
+      "name": "MS Office",
+      "issuer": "Al-Hamd Institute",
+      "year": "",
+      "image": ""
+    },
+    {
+      "name": "Inter-School Olympia",
+      "issuer": "Pak-Turk School",
+      "year": "",
+      "image": ""
+    }
+  ],
+  "courses": [],
+  "experience": [],
+  "sections": [],
+  "languages": ["Urdu — Native/Fluent", "English — Moderate"],
+  "interests": [
+    "Generative AI & Prompt Engineering",
+    "Data Analytics",
+    "Finance & Accounting",
+    "AI Application Development"
+  ],
+  "quickQuestions": [
+    "Who is Muhammad Taswaib?",
+    "What are your skills?",
+    "Show me your projects",
+    "Where did you study?",
+    "What is your education?",
+    "Show your certificates",
+    "How do I contact you?"
+  ]
+}

@@ -1,11 +1,12 @@
 "use client";
 
-import { education } from "@/data/resume";
+import { useResume } from "./ResumeProvider";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 import { GraduationIcon } from "./icons";
 
 export default function Education() {
+  const { education } = useResume();
   return (
     <section
       id="education"

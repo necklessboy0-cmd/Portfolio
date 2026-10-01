@@ -7,6 +7,7 @@ import StarField from "@/components/StarField";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Chatbot from "@/components/Chatbot";
+import ResumeProvider from "@/components/ResumeProvider";
 
 const orbitron = Orbitron({
   variable: "--font-orbitron",
@@ -53,13 +54,15 @@ export default function RootLayout({
       className={`${orbitron.variable} ${chakra.variable} ${spaceGrotesk.variable}`}
     >
       <body className="nebula-page min-h-full">
-        <SmoothScroll>
-          <StarField />
-          <Navbar />
-          <main className="relative z-10">{children}</main>
-          <Footer />
-          <Chatbot />
-        </SmoothScroll>
+        <ResumeProvider>
+          <SmoothScroll>
+            <StarField />
+            <Navbar />
+            <main className="relative z-10">{children}</main>
+            <Footer />
+            <Chatbot />
+          </SmoothScroll>
+        </ResumeProvider>
       </body>
     </html>
   );

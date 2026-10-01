@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { quickQuestions } from "@/data/resume";
+import { useResume, useResumeRefresh } from "./ResumeProvider";
 import { answerAssistant } from "@/lib/chatEngine";
 import { SendIcon, SparklesIcon } from "./icons";
 
@@ -14,6 +14,8 @@ const BOOT_MSG: Msg = {
 };
 
 export default function Chatbot() {
+  const data = useResume();
+  const refresh = useResumeRefresh();
   const [open, setOpen] = useState(false);
   const [msgs, setMsgs] = useState<Msg[]>([BOOT_MSG]);
   const [input, setInput] = useState("");
@@ -26,10 +28,11 @@ export default function Chatbot() {
       setMsgs((prev) => [...prev, { role: "user", text }]);
       setInput("");
       setTimeout(() => {
-        setMsgs((prev) => [...prev, { role: "bot", text: answerAssistant(text) }]);
+        setMsgs((prev) => [...prev, { role: "bot", text: answerAssistant(text, data) }]);
+        void refresh();
       }, 450);
     },
-    [],
+    [data, refresh],
   );
 
   useEffect(() => {
@@ -127,7 +130,7 @@ export default function Chatbot() {
             {/* suggestions */}
             {msgs.length <= 2 && (
               <div className="flex flex-wrap gap-2 px-5 pt-2 pb-1">
-                {quickQuestions.map((q) => (
+                {(data.quickQuestions ?? []).map((q) => (
                   <button
                     key={q}
                     onClick={() => send(q)}

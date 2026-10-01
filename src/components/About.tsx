@@ -1,10 +1,11 @@
 "use client";
 
-import { personal } from "@/data/resume";
+import { useResume } from "./ResumeProvider";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 
 export default function About() {
+  const { personal } = useResume();
   const facts: { label: string; value: string; href?: string }[] = [
     { label: "Name", value: personal.shortName },
     { label: "Location", value: personal.location },

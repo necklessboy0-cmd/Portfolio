@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "motion/react";
-import { personal } from "@/data/resume";
+import { useResume } from "./ResumeProvider";
 import SocialLinks from "./SocialLinks";
 import { ChevronDownIcon, DownloadIcon, SparklesIcon } from "./icons";
 
@@ -17,6 +17,7 @@ function scrollToId(id: string) {
 }
 
 export default function Hero() {
+  const { personal } = useResume();
   return (
     <section
       id="top"
