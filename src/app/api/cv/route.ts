@@ -96,11 +96,11 @@ function drawBody(
   c: Y,
   text: string,
   size = 10,
-  opts?: { style?: "normal" | "bold" | "italic"; width?: number; gapAfter?: number },
+  opts?: { style?: "normal" | "bold" | "italic"; width?: number; gapAfter?: number; color?: [number, number, number] },
 ) {
   doc.setFont("helvetica", opts?.style ?? "normal");
   doc.setFontSize(size);
-  doc.setTextColor(...INK);
+  doc.setTextColor(...(opts?.color ?? INK));
   const lines = doc.splitTextToSize(text, opts?.width ?? CONTENT_W) as string[];
   for (const line of lines) {
     ensureSpace(c, doc, size * 1.38);
@@ -182,8 +182,8 @@ function drawCv(doc: Pdf, data: ResumeData) {
     for (const e of data.education) {
       entryLine(doc, c, e.degree, { link: e.link, size: 10.5 });
       const meta = [e.institution, e.years].filter(Boolean).join(" — ");
-      if (meta) drawBody(doc, c, meta, 9.5);
-      if (e.details) drawBody(doc, c, e.details, 9.5, { style: "italic" });
+      if (meta) drawBody(doc, c, meta, 9.5, { style: "italic", color: GRAY });
+      if (e.details) drawBody(doc, c, e.details, 9.5, { style: "italic", color: GRAY });
       c.y += 4;
     }
   }
@@ -194,7 +194,7 @@ function drawCv(doc: Pdf, data: ResumeData) {
     for (const x of data.experience) {
       entryLine(doc, c, x.title, { link: x.link, size: 10.5 });
       const meta = [x.subtitle, x.year].filter(Boolean).join(" — ");
-      if (meta) drawBody(doc, c, meta, 9.5);
+      if (meta) drawBody(doc, c, meta, 9.5, { style: "italic", color: GRAY });
       if (x.description) drawBody(doc, c, x.description, 9.5);
       c.y += 4;
     }
@@ -206,7 +206,8 @@ function drawCv(doc: Pdf, data: ResumeData) {
     for (const pr of data.projects) {
       entryLine(doc, c, pr.name, { link: pr.link, size: 10.5 });
       if (pr.description) drawBody(doc, c, pr.description, 9.5);
-      if (pr.tags.length) drawBody(doc, c, `Technologies: ${pr.tags.join(", ")}`, 9);
+      if (pr.tags.length)
+        drawBody(doc, c, `Technologies: ${pr.tags.join(", ")}`, 9, { style: "italic", color: GRAY });
       c.y += 4;
     }
   }
@@ -216,7 +217,8 @@ function drawCv(doc: Pdf, data: ResumeData) {
     sectionTitle(doc, c, "Certifications");
     for (const cert of data.certificates) {
       const meta = [cert.issuer, cert.year].filter(Boolean).join(" · ");
-      entryLine(doc, c, meta ? `${cert.name} — ${meta}` : cert.name, { link: cert.link, size: 10, gapAfter: 2 });
+      entryLine(doc, c, cert.name, { link: cert.link, size: 10 });
+      if (meta) drawBody(doc, c, meta, 9.5, { style: "italic", color: GRAY, gapAfter: 2 });
     }
   }
 
@@ -225,7 +227,8 @@ function drawCv(doc: Pdf, data: ResumeData) {
     sectionTitle(doc, c, "Courses");
     for (const co of data.courses) {
       const meta = [co.subtitle, co.year].filter(Boolean).join(" · ");
-      entryLine(doc, c, meta ? `${co.title} — ${meta}` : co.title, { link: co.link, size: 10, gapAfter: 2 });
+      entryLine(doc, c, co.title, { link: co.link, size: 10 });
+      if (meta) drawBody(doc, c, meta, 9.5, { style: "italic", color: GRAY, gapAfter: 2 });
     }
   }
 
@@ -235,7 +238,7 @@ function drawCv(doc: Pdf, data: ResumeData) {
     for (const it of s.items) {
       entryLine(doc, c, it.title, { link: it.link, size: 10 });
       const meta = [it.subtitle, it.year].filter(Boolean).join(" — ");
-      if (meta) drawBody(doc, c, meta, 9.5);
+      if (meta) drawBody(doc, c, meta, 9.5, { style: "italic", color: GRAY });
       if (it.description) drawBody(doc, c, it.description, 9.5);
       c.y += 4;
     }

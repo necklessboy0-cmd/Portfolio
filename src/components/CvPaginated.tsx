@@ -139,7 +139,9 @@ function buildBlocks(data: ResumeData): Block[] {
       <strong>{e.degree}</strong>
       {e.years ? ` (${e.years})` : ""}
       <br />
-      {e.link ? <ExtLink href={e.link}>{e.institution}</ExtLink> : e.institution}
+      <em style={{ color: MUTED }}>
+        {e.link ? <ExtLink href={e.link}>{e.institution}</ExtLink> : e.institution}
+      </em>
       {e.details && (
         <p style={{ fontSize: 11.5, color: MUTED, marginTop: 2 }}>{e.details}</p>
       )}
@@ -147,10 +149,7 @@ function buildBlocks(data: ResumeData): Block[] {
   ));
 
   const skillItems = data.skills.map((s: Skill) => (
-    <li key={s.name} style={{ fontSize: 12.5 }}>
-      <strong>{s.name}</strong>
-      {s.level ? ` — ${s.level}%` : ""}
-    </li>
+    <li key={s.name} style={{ fontSize: 12.5 }}>{s.name}</li>
   ));
 
   const projectItems = data.projects.map((pr: Project) => (
@@ -160,11 +159,10 @@ function buildBlocks(data: ResumeData): Block[] {
       </strong>{" "}
       — {pr.description}
       {pr.tags.length > 0 && (
-        <p style={{ fontSize: 11.5, color: MUTED, marginTop: 2 }}>Technologies: {pr.tags.join(", ")}</p>
+        <p style={{ fontSize: 11.5, color: MUTED, marginTop: 2 }}>
+          <em>Technologies:</em> {pr.tags.join(", ")}
+        </p>
       )}
-      <p style={{ fontSize: 11.5, marginTop: 2 }}>
-        Link: <ExtLink href={pr.link}>{pr.link.replace(/^https?:\/\//, "")}</ExtLink>
-      </p>
     </li>
   ));
 
@@ -173,8 +171,12 @@ function buildBlocks(data: ResumeData): Block[] {
       <strong>
         {c.link ? <ExtLink href={c.link}>{c.name}</ExtLink> : c.name}
       </strong>
-      {c.issuer ? ` — ${c.issuer}` : ""}
-      {c.year ? ` (${c.year})` : ""}
+      {(c.issuer || c.year) && (
+        <em style={{ color: MUTED }}>
+          {" — "}
+          {[c.issuer, c.year].filter(Boolean).join(" · ")}
+        </em>
+      )}
       {c.link && c.issuer ? (
         <>
           {" — "}
@@ -189,7 +191,12 @@ function buildBlocks(data: ResumeData): Block[] {
       <strong>
         {x.link ? <ExtLink href={x.link}>{x.title}</ExtLink> : x.title}
       </strong>
-      {x.subtitle ? ` — ${x.subtitle}` : ""}
+      {x.subtitle ? (
+        <>
+          {" — "}
+          <em style={{ color: MUTED }}>{x.subtitle}</em>
+        </>
+      ) : ""}
       {x.year ? ` (${x.year})` : ""}
       {x.description && (
         <p style={{ fontSize: 11.5, color: MUTED, marginTop: 2 }}>{x.description}</p>
@@ -202,7 +209,12 @@ function buildBlocks(data: ResumeData): Block[] {
       <strong>
         {c.link ? <ExtLink href={c.link}>{c.title}</ExtLink> : c.title}
       </strong>
-      {c.subtitle ? ` — ${c.subtitle}` : ""}
+      {c.subtitle ? (
+        <>
+          {" — "}
+          <em style={{ color: MUTED }}>{c.subtitle}</em>
+        </>
+      ) : ""}
       {c.year ? ` (${c.year})` : ""}
       {c.description && (
         <p style={{ fontSize: 11.5, color: MUTED, marginTop: 2 }}>{c.description}</p>
@@ -219,7 +231,12 @@ function buildBlocks(data: ResumeData): Block[] {
           <strong>
             {item.link ? <ExtLink href={item.link}>{item.title}</ExtLink> : item.title}
           </strong>
-          {item.subtitle ? ` — ${item.subtitle}` : ""}
+          {item.subtitle ? (
+            <>
+              {" — "}
+              <em style={{ color: MUTED }}>{item.subtitle}</em>
+            </>
+          ) : ""}
           {item.year ? ` (${item.year})` : ""}
           {item.description && (
             <p style={{ fontSize: 11.5, color: MUTED, marginTop: 2 }}>{item.description}</p>
