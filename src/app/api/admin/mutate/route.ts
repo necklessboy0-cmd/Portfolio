@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { SESSION_COOKIE, verifySessionToken } from "@/lib/adminAuth";
+import { SESSION_COOKIE, verifySessionToken } from "@/lib/session";
 import { readResumeData, writeResumeDataLocal, commitResumeData, triggerDeployHook } from "@/lib/resumeStore";
 import { applyMutations } from "@/lib/resumeMutations";
 import { parseIntents, proposalsToOps, type Proposal } from "@/lib/intentParser";

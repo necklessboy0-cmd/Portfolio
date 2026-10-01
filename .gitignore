@@ -48,3 +48,4 @@ dev-server.log
 .vercel
 vercel-login.log
 public/uploads
+.private-uploads
