@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
   SESSION_COOKIE,
-  SESSION_MAX_AGE_S,
   createSessionToken,
   hashPassword,
   sessionCookieOptions,
@@ -83,4 +82,3 @@ export async function POST(req: NextRequest) {
   return res;
 }
 
-export { SESSION_MAX_AGE_S };
