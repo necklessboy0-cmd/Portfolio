@@ -5,13 +5,13 @@
     "shortName": "Muhammad Taswaib",
     "fullName": "Muhammad Taswaib",
     "role": "CA Student · Accounting & Finance",
-    "tagline": "CA student with a strong foundation in Accounting and Finance, applying data analytics and AI to practical business and financial problems.",
-    "summary": "CA student at the Institute of Chartered Accountants of Pakistan (ICAP) with a strong foundation in Accounting and Finance, currently progressing through the CAF level. My primary professional direction is auditing, financial analysis, and professional accounting development. I complement this core with practical technology skills — I have built and deployed small web applications using Streamlit, APIs, and prompt engineering, and I am interested in applying data analytics and Generative AI to real accounting, finance, and business problems.",
+    "tagline": "CA student with a strong foundation in Accounting and Finance, with an interest in applying technology, data analytics, and Generative AI to practical business and financial problems.",
+    "summary": "CA student at the Institute of Chartered Accountants of Pakistan (ICAP) with a strong foundation in Accounting and Finance, currently progressing through the CAF level. My primary professional direction is Accounting, Finance, Auditing, and professional accounting development. I complement this core with practical technology skills — I have built and deployed small web applications using Streamlit, APIs, and prompt engineering, and I am interested in applying data analytics and Generative AI to real accounting, finance, and business problems.",
     "email": "muhammadtaswaib0159@gmail.com",
     "phone": "+92 341 9429291",
     "whatsappNumber": "923419429291",
     "location": "Karachi, Pakistan",
-    "website": "https://muhammad-taswaib-portfolio-7exa877ew-necklessboy0-4972.vercel.app",
+    "website": "https://muhammad-taswaib-portfolio.vercel.app",
     "availability": "Open to accounting, finance & data collaborations",
     "github": "https://github.com/necklessboy0-cmd",
     "linkedin": "https://www.linkedin.com/in/muhammad-taswaib-8757b52b9",
@@ -48,45 +48,110 @@
     }
   ],
   "skills": [
-    { "name": "Financial Accounting", "level": 85 },
-    { "name": "Auditing", "level": 75 },
-    { "name": "Taxation", "level": 70 },
-    { "name": "Financial Analysis", "level": 75 },
-    { "name": "MS Office (Excel, Word, PowerPoint)", "level": 85 },
-    { "name": "Data Analytics", "level": 76 },
-    { "name": "Generative AI", "level": 88 },
-    { "name": "Prompt Engineering", "level": 86 },
-    { "name": "AI Application Development", "level": 82 },
-    { "name": "Streamlit", "level": 88 },
-    { "name": "APIs", "level": 82 },
-    { "name": "Problem Solving", "level": 90 },
-    { "name": "Communication", "level": 86 },
-    { "name": "Creativity", "level": 88 },
-    { "name": "Team Management", "level": 78 },
-    { "name": "Leadership", "level": 78 },
-    { "name": "Adaptability", "level": 90 }
+    {
+      "name": "Financial Accounting",
+      "level": 85
+    },
+    {
+      "name": "Auditing",
+      "level": 75
+    },
+    {
+      "name": "Taxation",
+      "level": 70
+    },
+    {
+      "name": "Financial Analysis",
+      "level": 75
+    },
+    {
+      "name": "MS Office (Excel, Word, PowerPoint)",
+      "level": 85
+    },
+    {
+      "name": "Data Analytics",
+      "level": 76
+    },
+    {
+      "name": "Generative AI",
+      "level": 80
+    },
+    {
+      "name": "Prompt Engineering",
+      "level": 78
+    },
+    {
+      "name": "AI Application Development",
+      "level": 75
+    },
+    {
+      "name": "Streamlit",
+      "level": 80
+    },
+    {
+      "name": "APIs",
+      "level": 78
+    },
+    {
+      "name": "Problem Solving",
+      "level": 90
+    },
+    {
+      "name": "Communication",
+      "level": 86
+    },
+    {
+      "name": "Creativity",
+      "level": 88
+    },
+    {
+      "name": "Team Management",
+      "level": 78
+    },
+    {
+      "name": "Leadership",
+      "level": 78
+    },
+    {
+      "name": "Adaptability",
+      "level": 90
+    }
   ],
   "projects": [
     {
       "name": "THUNDER",
-      "description": "Web application built with Streamlit that uses Generative AI APIs to assist with everyday tasks — deployed live as a working demo.",
-      "tags": ["Streamlit", "Python", "API", "Generative AI"],
+      "description": "A Streamlit-based web application that leverages Generative AI APIs to assist with everyday tasks. Deployed as a working demo.",
+      "tags": [
+        "Streamlit",
+        "Python",
+        "APIs",
+        "Generative AI"
+      ],
       "link": "https://thunder-yoo9ildpztibs8t8u4fggd.streamlit.app/",
       "image": "",
       "icon": "⚡"
     },
     {
       "name": "CV Analyzer",
-      "description": "Streamlit tool that reviews a resume and suggests improvements using AI-based text analysis.",
-      "tags": ["Streamlit", "Python", "Generative AI"],
+      "description": "A Streamlit tool that reviews resumes and provides practical suggestions for improvement, demonstrating the use of AI-assisted text analysis.",
+      "tags": [
+        "Streamlit",
+        "Python",
+        "Generative AI"
+      ],
       "link": "https://cv-analyzer-lwhzhfnhzdsfdwdg6kpwpc.streamlit.app/",
       "image": "",
       "icon": "📄"
     },
     {
       "name": "ResearchAssist",
-      "description": "Research assistant web app built with Next.js and React that helps gather and organize information quickly, with AI-assisted features.",
-      "tags": ["Next.js", "React", "Tailwind", "AI"],
+      "description": "A research assistant web application built with Next.js and React, designed to help gather and organise information efficiently with practical automation features.",
+      "tags": [
+        "Next.js",
+        "React",
+        "Tailwind",
+        "Automation"
+      ],
       "link": "https://vercel-researchassist.vercel.app/",
       "image": "",
       "icon": "🤖"
@@ -128,7 +193,10 @@
   "courses": [],
   "experience": [],
   "sections": [],
-  "languages": ["Urdu — Native/Fluent", "English — Moderate"],
+  "languages": [
+    "Urdu — Native/Fluent",
+    "English — Moderate"
+  ],
   "interests": [
     "Accounting & Finance",
     "Auditing & Financial Analysis",
