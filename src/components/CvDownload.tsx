@@ -73,7 +73,7 @@ export default function CvDownload({ sheetId }: { sheetId: string }) {
       <div className="no-print mx-auto max-w-xl rounded-2xl border border-white/10 bg-white/5 p-6 text-center">
         <p className="mb-1 text-sm font-bold uppercase tracking-wider">CV download is protected</p>
         <p className="mb-4 text-sm opacity-70">
-          The CV is viewable here, but downloading it requires the administrator password.
+          The CV is viewable here, but download requires authentication.
         </p>
         <a
           href="/login?next=/cv"

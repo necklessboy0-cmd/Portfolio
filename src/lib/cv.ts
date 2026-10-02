@@ -19,7 +19,7 @@ export function buildCvText(data: ResumeData): string {
     [
       p.phone,
       `Email: ${p.email}`,
-      `Website: ${p.website}`,
+      `${p.website}`,
       `GitHub: ${p.github}`,
       `LinkedIn: ${p.linkedin}`,
       `WhatsApp: ${p.phone}`,
