@@ -20,6 +20,10 @@ const CV = {
       href: "https://www.linkedin.com/in/muhammad-taswaib-8757b52b9",
     },
     { label: "GitHub", href: "https://github.com/necklessboy0-cmd" },
+    {
+      label: "Website",
+      href: "https://portfolio-5hja-git-main-necklessboy0-4972.vercel.app/",
+    },
   ] as { label: string; href?: string }[],
 
   summary:
