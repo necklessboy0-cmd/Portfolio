@@ -1,5 +1,7 @@
 import { createHmac, createHash, randomBytes, scrypt as _scrypt, timingSafeEqual } from "crypto";
 import { promisify } from "util";
+import fs from "fs";
+import path from "path";
 
 const scrypt = promisify(_scrypt) as (
   password: string | Buffer,
@@ -10,14 +12,6 @@ const scrypt = promisify(_scrypt) as (
 
 // ----------------------------------------------------------------------------
 // Password-based authentication.
-//  • The ONLY credential is the administrator password. It is never stored in
-//    source: the owner sets ADMIN_PASSWORD_HASH (scrypt, via `npm run
-//    set-password` which writes the gitignored .env.local) or the equivalent
-//    Vercel environment variable in production.
-//  • Sessions are HMAC-SHA256-signed, HttpOnly cookies (12h). The token binds
-//    to a fingerprint of the password hash, so changing the password
-//    immediately invalidates every existing session.
-//  • No signup, no Google OAuth, no public registration anywhere.
 // ----------------------------------------------------------------------------
 
 export const SESSION_COOKIE = "mt_session";
@@ -25,6 +19,23 @@ export const SESSION_MAX_AGE_S = 12 * 60 * 60; // 12 hours
 
 const SCRYPT = { N: 16384, r: 8, p: 1, maxmem: 64 * 1024 * 1024 };
 const KEY_LEN = 64;
+
+// File-based password path setup
+const PASSWORD_FILE_PATH = path.join(process.cwd(), "src", "lib", "admin_password.txt");
+
+/**
+ * Helper function to read plain text password from local file
+ */
+function getPasswordFromFile(): string | null {
+  try {
+    if (fs.existsSync(PASSWORD_FILE_PATH)) {
+      return fs.readFileSync(PASSWORD_FILE_PATH, "utf-8").trim();
+    }
+  } catch (err) {
+    console.error("Error reading admin_password.txt:", err);
+  }
+  return null;
+}
 
 // ------------------------------ password ------------------------------------
 
@@ -67,28 +78,35 @@ function scryptSyncLocal(password: string, salt: Buffer, keylen: number): Buffer
 }
 
 export function adminPasswordConfigured(): boolean {
-  return parsePasswordHash(currentPasswordHash()) !== null || process.env.NODE_ENV !== "production";
+  return getPasswordFromFile() !== null || parsePasswordHash(currentPasswordHash()) !== null || process.env.NODE_ENV !== "production";
 }
 
-/**
- * Runtime override for the stored hash. `next start` reads .env.local once at
- * boot; after an in-app password change we set this so the new hash takes
- * effect IMMEDIATELY (old sessions die instantly) without waiting for a
- * process restart. Persistence still comes from the env file/Vercel secret.
- */
 let runtimePasswordHash: string | null = null;
 export function setRuntimePasswordHash(encoded: string): void {
   runtimePasswordHash = encoded;
+  // File mein bhi save karne ke liye
+  try {
+    fs.writeFileSync(PASSWORD_FILE_PATH, encoded.trim(), "utf-8");
+  } catch (err) {
+    console.error("Failed to update admin_password.txt:", err);
+  }
 }
+
 function currentPasswordHash(): string | undefined {
   return runtimePasswordHash ?? process.env.ADMIN_PASSWORD_HASH;
 }
 
-/** Constant-time password verification against the stored scrypt hash. */
+/** Password verification directly reading from file first, fallback to hashed check */
 export async function verifyAdminPassword(password: string): Promise<boolean> {
+  // 1. Pehle file se read karo
+  const filePassword = getPasswordFromFile();
+  if (filePassword) {
+    return password === filePassword;
+  }
+
+  // 2. Fallback to hash verification if no file exists
   const stored = parsePasswordHash(currentPasswordHash());
   if (!stored) {
-    // Dev convenience ONLY (never in production): unset hash accepts "admin".
     if (process.env.NODE_ENV !== "production" && password === "admin") return true;
     return false;
   }
@@ -107,7 +125,8 @@ export async function verifyAdminPassword(password: string): Promise<boolean> {
 
 /** Short fingerprint of the current password hash — baked into session tokens. */
 function passwordVersion(): string {
-  const raw = currentPasswordHash() || "dev-admin";
+  const filePassword = getPasswordFromFile();
+  const raw = filePassword || currentPasswordHash() || "dev-admin";
   return createHash("sha256").update(raw).digest("hex").slice(0, 16);
 }
 
@@ -119,7 +138,6 @@ function signingKey(): string {
   return process.env.ADMIN_SESSION_SECRET || "freebuff-local-dev-secret";
 }
 
-/** Fail closed in production without a signing secret; dev gets a local fallback. */
 export function sessionsConfigured(): boolean {
   return Boolean(process.env.ADMIN_SESSION_SECRET) || process.env.NODE_ENV !== "production";
 }
@@ -155,7 +173,6 @@ export function verifySessionToken(token: string | undefined): boolean {
     const payload = JSON.parse(Buffer.from(body, "base64url").toString("utf-8")) as SessionPayload;
     if (payload.v !== 1) return false;
     if (typeof payload.exp !== "number" || payload.exp < Date.now()) return false;
-    // Bound sessions to the current password: a password change kills them all.
     if (payload.pv !== passwordVersion()) return false;
     return true;
   } catch {
@@ -173,5 +190,4 @@ export function sessionCookieOptions() {
   };
 }
 
-/** The session grants ONE owner role — there is a single shared credential. */
 export const OWNER_ROLE = "owner" as const;
