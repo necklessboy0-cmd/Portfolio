@@ -37,6 +37,22 @@ function getPasswordFromFile(): string | null {
   return null;
 }
 
+// config.json — the single credential source (no env vars required).
+// Holds a salted scrypt `passwordHash` and the `sessionSecret` that signs
+// login cookies. Read once and cached for the life of the process.
+let cachedConfig: { passwordHash?: string; sessionSecret?: string } | null = null;
+function readConfigJson(): { passwordHash?: string; sessionSecret?: string } {
+  if (cachedConfig) return cachedConfig;
+  try {
+    const raw = fs.readFileSync(path.join(process.cwd(), "config.json"), "utf-8");
+    cachedConfig = JSON.parse(raw) as { passwordHash?: string; sessionSecret?: string };
+  } catch (err) {
+    console.error("Failed to read config.json:", err);
+    cachedConfig = {};
+  }
+  return cachedConfig;
+}
+
 // ------------------------------ password ------------------------------------
 
 export type PasswordHash = { format: "scrypt"; N: number; r: number; p: number; salt: Buffer; hash: Buffer };
@@ -93,7 +109,7 @@ export function setRuntimePasswordHash(encoded: string): void {
 }
 
 function currentPasswordHash(): string | undefined {
-  return runtimePasswordHash ?? process.env.ADMIN_PASSWORD_HASH;
+  return runtimePasswordHash ?? readConfigJson().passwordHash ?? process.env.ADMIN_PASSWORD_HASH;
 }
 
 /** Password verification directly reading from file first, fallback to hashed check */
@@ -135,11 +151,11 @@ function passwordVersion(): string {
 type SessionPayload = { v: 1; iat: number; exp: number; pv: string };
 
 function signingKey(): string {
-  return process.env.ADMIN_SESSION_SECRET || "freebuff-local-dev-secret";
+  return readConfigJson().sessionSecret ?? process.env.ADMIN_SESSION_SECRET ?? "freebuff-local-dev-secret";
 }
 
 export function sessionsConfigured(): boolean {
-  return Boolean(process.env.ADMIN_SESSION_SECRET) || process.env.NODE_ENV !== "production";
+  return Boolean(readConfigJson().sessionSecret) || Boolean(process.env.ADMIN_SESSION_SECRET) || process.env.NODE_ENV !== "production";
 }
 
 export function createSessionToken(now = Date.now()): string {
