@@ -151,7 +151,9 @@ function drawCv(doc: Pdf, data: ResumeData) {
   const contact = [
     { text: p.phone, href: p.phone ? `tel:${p.phone.replace(/\s+/g, "")}` : undefined },
     { text: p.email, href: `mailto:${p.email}` },
-    { text: p.website, href: p.website },
+    // Show a clean "Website" label instead of the full URL — the link itself
+    // (href) still takes the reader to the site when clicked in the PDF.
+    { text: p.website ? "Website" : "", href: p.website },
     { text: p.location, href: undefined },
   ].filter((x) => x.text);
 

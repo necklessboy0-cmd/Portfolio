@@ -423,8 +423,18 @@ a.cvp-date { color: var(--accent); }
 
 @page { size: A4; margin: 0; }
 @media print {
+  html, body { margin: 0; padding: 0; background: #fff; }
   .cvp-root { background: none; padding: 0; gap: 0; display: block; }
-  .cvp-page { box-shadow: none; margin: 0; }
+  .cvp-page {
+    box-shadow: none;
+    margin: 0;
+    /* 1mm of slack: a page box exactly 297mm tall overflows the printed
+       sheet by a sub-pixel, which inserts a blank page between every two
+       pages. 296mm avoids that while remaining visually identical. */
+    height: 296mm;
+  }
+  /* The last sheet must not force a trailing blank page. */
+  .cvp-page:last-child { break-after: auto; page-break-after: auto; }
   .cvp-probe { display: none; }
 }
 `;
