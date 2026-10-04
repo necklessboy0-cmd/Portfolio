@@ -1,0 +1,5 @@
+{
+  "_readme": "CV/admin login config. passwordHash is a salted scrypt hash (not the plain password). Change it with: npm run set-password. Keep this repository PRIVATE.",
+  "passwordHash": "scrypt:16384:8:1:1pLEsM+75xwR8+ycd9BOSA==:Tm7bODJKWx2LRlkbT9kJURNaXwXFRZPMVr7T0E5AMU5QLfOKsB5MX4XuHecU+g67PTgA+o1HnSgjZc2gCtz5sQ==",
+  "sessionSecret": "01afb1fdd63206f4dd60eeaef36438356951ff84d4a0552985fbb3986d7abe9c"
+}

@@ -135,7 +135,14 @@ npm i -g vercel
 vercel
 ```
 
-> No environment variables or API keys are required. Everything runs client-side/static.
+> No environment variables are required. The CV-download password lives in `config.json`
+> (a salted hash, not the plain password) and is bundled with the deployment.
+
+### 🔐 CV download password
+
+- Downloads (`/api/cv`, `/api/resume.txt`) require logging in at `/login`; the CV stays viewable.
+- Change the password: `npm run set-password`, then commit `config.json` and redeploy.
+- Keep this repository **private** — `config.json` also holds the key that signs login sessions.
 
 ---
 
