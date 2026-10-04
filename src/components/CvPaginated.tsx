@@ -192,9 +192,11 @@ function buildBlocks(): Block[] {
           {i === 0 && <Heading>Projects</Heading>}
           <div className="cvp-row">
             <strong>{p.name}</strong>
-            <a className="cvp-date" href={p.href}>
-              Live demo
-            </a>
+            {p.href ? (
+              <a className="cvp-date" href={p.href} target="_blank" rel="noopener noreferrer">
+                Live demo ↗
+              </a>
+            ) : null}
           </div>
           <p className="cvp-sub cvp-italic">{p.stack}</p>
           <ul className="cvp-list">
